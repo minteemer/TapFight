@@ -1,4 +1,4 @@
-package valiev.timur.tapfight.Game;
+package valiev.timur.tapfight.game;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -15,18 +15,18 @@ import valiev.timur.tapfight.R;
 
 public class GameActivity extends AppCompatActivity implements GameView {
 
-    HashMap<Player, TextView> scoreViews = new HashMap<>();
-    ProgressBar progressBar;
+    private HashMap<Player, TextView> scoreViews = new HashMap<>();
+    private ProgressBar progressBar;
 
-    GamePresenter presenter;
+    private GamePresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        scoreViews.put(Player.P1, (TextView) findViewById(R.id.p1FinalScore));
-        scoreViews.put(Player.P2, (TextView) findViewById(R.id.p2FinalScore));
+        scoreViews.put(Player.P1, (TextView) findViewById(R.id.p1Score));
+        scoreViews.put(Player.P2, (TextView) findViewById(R.id.p2Score));
 
         progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(0);

@@ -1,4 +1,4 @@
-package valiev.timur.tapfight.Game;
+package valiev.timur.tapfight.game;
 
 import valiev.timur.tapfight.Player;
 

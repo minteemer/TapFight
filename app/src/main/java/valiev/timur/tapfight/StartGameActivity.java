@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import valiev.timur.tapfight.Game.GameActivity;
+import valiev.timur.tapfight.game.GameActivity;
 
 public class StartGameActivity extends AppCompatActivity {
 

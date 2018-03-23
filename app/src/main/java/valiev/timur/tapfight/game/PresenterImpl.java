@@ -1,11 +1,11 @@
-package valiev.timur.tapfight.Game;
+package valiev.timur.tapfight.game;
 
 import valiev.timur.tapfight.Player;
 
 import static java.lang.Thread.sleep;
 
 public class PresenterImpl implements GamePresenter {
-    public static final int FIGHT_TIME = 10 * 1000;
+    static final int FIGHT_TIME = 10 * 1000;
     private final int PROGRESS_BAR_UPDATE_TIME = 30;
     private long startTime;
 
@@ -13,7 +13,7 @@ public class PresenterImpl implements GamePresenter {
     private GameModel model;
 
 
-    public PresenterImpl(GameView view, GameModel model) {
+    PresenterImpl(GameView view, GameModel model) {
         this.view = view;
         this.model = model;
 

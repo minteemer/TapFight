@@ -18,8 +18,8 @@ public class GameOverActivity extends AppCompatActivity {
         int p2Count = intent.getIntExtra("P2_SCORE", 0);
         System.out.println(p1Count + "/" + p2Count);
 
-        TextView p1Score = findViewById(R.id.p1FinalScore);
-        TextView p2Score = findViewById(R.id.p2FinalScore);
+        TextView p1Score = findViewById(R.id.p1Score);
+        TextView p2Score = findViewById(R.id.p2Score);
         TextView winner = findViewById(R.id.winnerText);
 
         p1Score.setText(Integer.toString(p1Count));

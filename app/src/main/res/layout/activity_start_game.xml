@@ -11,7 +11,7 @@
         style="@style/Widget.AppCompat.Button"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:background="@drawable/ic_launcher_background"
+        android:background="@color/colorAccent"
         android:onClick="startGame"
         android:text="@string/start_btn_text"
         android:textColor="#fff"
@@ -20,6 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 </android.support.constraint.ConstraintLayout>
