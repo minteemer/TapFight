@@ -4,30 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="valiev.timur.tapfight.game.GameActivity">
+    tools:context="valiev.timur.tapfight.presentation.game.view.GameActivity">
 
     <Button
-        android:id="@+id/p1Button"
+        android:id="@+id/button_p1"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:background="@color/player1Color"
+        android:background="@color/player1_color"
         android:onClick="onTapBtn"
         android:text="@string/player_1_btn_text"
         android:textColor="#fff"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/p2Button"
+        app:layout_constraintEnd_toStartOf="@+id/button_p2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <Button
-        android:id="@+id/p2Button"
+        android:id="@+id/button_p2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:background="@color/player2Color"
+        android:background="@color/player2_color"
         android:onClick="onTapBtn"
         android:text="@string/player_2_btn_text"
         android:textColor="#fff"
@@ -35,39 +35,39 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/p1Button"
+        app:layout_constraintStart_toEndOf="@+id/button_p1"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <TextView
-        android:id="@+id/p1Score"
+        android:id="@+id/p1_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/initial_score_field_text"
-        android:textColor="@color/player1Color"
+        android:textColor="@color/player1_color"
         android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/p1Button"
+        app:layout_constraintBottom_toTopOf="@+id/button_p1"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        app:layout_constraintTop_toBottomOf="@+id/progress_game_time" />
 
     <TextView
-        android:id="@+id/p2Score"
+        android:id="@+id/p2_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/initial_score_field_text"
-        android:textColor="@color/player2Color"
+        android:textColor="@color/player2_color"
         android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/p2Button"
+        app:layout_constraintBottom_toTopOf="@+id/button_p2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        app:layout_constraintTop_toBottomOf="@+id/progress_game_time" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/progress_game_time"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="80dp"

@@ -4,30 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="valiev.timur.tapfight.GameOverActivity">
+    tools:context="valiev.timur.tapfight.presentation.gameOver.GameOverActivity">
 
     <TextView
-        android:id="@+id/p2Score"
+        android:id="@+id/p2_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/initial_score_field_text"
-        android:textColor="@color/player2Color"
+        android:textColor="@color/player2_color"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/p1Score"
+        app:layout_constraintStart_toEndOf="@+id/p1_score"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/p1Score"
+        android:id="@+id/p1_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/initial_score_field_text"
-        android:textColor="@color/player1Color"
+        android:textColor="@color/player1_color"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/p2Score"
+        app:layout_constraintEnd_toStartOf="@+id/p2_score"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

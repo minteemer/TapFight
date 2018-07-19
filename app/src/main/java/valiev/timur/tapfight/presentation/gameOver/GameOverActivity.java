@@ -1,9 +1,12 @@
-package valiev.timur.tapfight;
+package valiev.timur.tapfight.presentation.gameOver;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import valiev.timur.tapfight.R;
+import valiev.timur.tapfight.presentation.startGame.StartGameActivity;
 
 public class GameOverActivity extends AppCompatActivity {
 
@@ -16,10 +19,9 @@ public class GameOverActivity extends AppCompatActivity {
 
         int p1Count = intent.getIntExtra("P1_SCORE", 0);
         int p2Count = intent.getIntExtra("P2_SCORE", 0);
-        System.out.println(p1Count + "/" + p2Count);
 
-        TextView p1Score = findViewById(R.id.p1Score);
-        TextView p2Score = findViewById(R.id.p2Score);
+        TextView p1Score = findViewById(R.id.p1_score);
+        TextView p2Score = findViewById(R.id.p2_score);
         TextView winner = findViewById(R.id.winnerText);
 
         p1Score.setText(Integer.toString(p1Count));

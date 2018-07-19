@@ -1,11 +1,12 @@
-package valiev.timur.tapfight;
+package valiev.timur.tapfight.presentation.startGame;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import valiev.timur.tapfight.game.GameActivity;
+import valiev.timur.tapfight.R;
+import valiev.timur.tapfight.presentation.game.view.GameActivity;
 
 public class StartGameActivity extends AppCompatActivity {
 
