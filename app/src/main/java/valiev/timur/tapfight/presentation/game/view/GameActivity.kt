@@ -5,6 +5,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.animation.LinearInterpolator
 import kotlinx.android.synthetic.main.activity_game.*
 
 
@@ -14,7 +15,6 @@ import valiev.timur.tapfight.domain.entities.PlayerId
 import valiev.timur.tapfight.presentation.game.presenter.GamePresenter
 import valiev.timur.tapfight.repositories.impl.preferences.GamePreferencesDAO
 import valiev.timur.tapfight.repositories.preferences.GamePreferencesRepository
-
 
 class GameActivity : AppCompatActivity(), GameView {
 
@@ -30,16 +30,23 @@ class GameActivity : AppCompatActivity(), GameView {
     }
 
     override fun updatePlayerScore(player: PlayerId, score: Int) {
-        when(player){
+        when (player) {
             PlayerId.P1 -> p1_score
             PlayerId.P2 -> p2_score
         }.text = score.toString()
     }
 
-    override fun startTimerAnimation(){
-        val progressAnimator = ObjectAnimator.ofFloat(progress_game_time, "progress", 0.0f,1.0f)
-        progressAnimator.duration = preferences.fightTimeSec
-        progressAnimator.start()
+    override fun startTimerAnimation() {
+        ObjectAnimator.ofInt(
+                progress_game_time,
+                "progress",
+                progress_game_time.progress,
+                progress_game_time.max
+        ).apply {
+            interpolator = LinearInterpolator()
+            duration = preferences.fightTimeSec * 1000
+            start()
+        }
     }
 
     override fun endGame(p1Score: Int, p2Score: Int) {
