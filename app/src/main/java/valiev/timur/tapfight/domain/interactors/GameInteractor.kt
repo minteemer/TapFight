@@ -1,6 +1,10 @@
 package valiev.timur.tapfight.domain.interactors
 
+import io.reactivex.Observable
+import io.reactivex.ObservableEmitter
+import io.reactivex.ObservableOnSubscribe
 import io.reactivex.Single
+import io.reactivex.subjects.BehaviorSubject
 import valiev.timur.tapfight.domain.entities.PlayerId
 import valiev.timur.tapfight.repositories.impl.preferences.GamePreferencesDAO
 import valiev.timur.tapfight.repositories.preferences.GamePreferencesRepository
@@ -28,8 +32,16 @@ class GameInteractor {
      * @returns new score of the player
      */
     fun tap(player: PlayerId): Int =
-            score[player]?.let { (it + 1).apply { score[player] = this } } ?: 0 // lol
+            score[player]?.let { oldScore ->
+                (oldScore + 1).also { newScore ->
+                    score[player] = newScore
+                    playersScore.onNext(player to newScore)
+                }
+            } ?: 0
 
+    fun getUserScoreObservable() : Observable<Pair<PlayerId, Int>> = playersScore
+
+    private val playersScore: BehaviorSubject<Pair<PlayerId, Int>> = BehaviorSubject.create()
 }
 
 

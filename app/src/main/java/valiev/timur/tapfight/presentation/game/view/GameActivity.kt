@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.animation.LinearInterpolator
+import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
 import kotlinx.android.synthetic.main.activity_game.*
 
 
@@ -57,11 +59,19 @@ class GameActivity : AppCompatActivity(), GameView {
         finish()
     }
 
+
+    private val tapBehaviorSubject: BehaviorSubject<PlayerId> = BehaviorSubject.create()
+
+    override fun getTapObservable(): Observable<PlayerId> = tapBehaviorSubject
+
     fun onTapBtn(view: View) {
-        when (view.id) {
-            R.id.button_p1 -> presenter.tapBtn(PlayerId.P1)
-            R.id.button_p2 -> presenter.tapBtn(PlayerId.P2)
-        }
+        tapBehaviorSubject.onNext(
+                when (view.id) {
+                    R.id.button_p1 -> PlayerId.P1
+                    R.id.button_p2 -> PlayerId.P2
+                    else -> PlayerId.P1
+                }
+        )
     }
 
 }

@@ -24,11 +24,17 @@ class GamePresenter(private val view: GameView) {
                             Log.e("GameActivity", "Game timer error", it)
                         }
                 )
-
         view.startTimerAnimation()
+
+        view.getTapObservable()
+                .observeOn(Schedulers.computation())
+                .subscribe { interactor.tap(it) }
+
+        interactor.getUserScoreObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { (playerId, score) ->
+                    view.updatePlayerScore(playerId, score)
+                }
     }
 
-    fun tapBtn(player: PlayerId) {
-        view.updatePlayerScore(player, interactor.tap(player))
-    }
 }
