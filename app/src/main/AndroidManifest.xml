@@ -18,7 +18,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.game.view.GameActivity" />
+        <activity
+            android:name=".presentation.game.view.GameActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <activity android:name=".presentation.gameOver.GameOverActivity" />
 
