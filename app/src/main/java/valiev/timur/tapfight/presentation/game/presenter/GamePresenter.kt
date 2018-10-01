@@ -2,6 +2,7 @@ package valiev.timur.tapfight.presentation.game.presenter
 
 import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import valiev.timur.tapfight.domain.entities.PlayerId
 import valiev.timur.tapfight.domain.interactors.GameInteractor
@@ -11,6 +12,8 @@ import valiev.timur.tapfight.presentation.game.view.GameView
 class GamePresenter(private val view: GameView) {
 
     private val interactor = GameInteractor()
+
+    private val disposables = CompositeDisposable()
 
     fun startGame() {
         interactor.startGame()
@@ -24,17 +27,24 @@ class GamePresenter(private val view: GameView) {
                             Log.e("GameActivity", "Game timer error", it)
                         }
                 )
+                .also { disposables.add(it) }
+
         view.startTimerAnimation()
 
         view.getTapObservable()
                 .observeOn(Schedulers.computation())
                 .subscribe { interactor.tap(it) }
+                .also { disposables.add(it) }
 
-        interactor.getUserScoreObservable()
+        interactor.userScoreObservable
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { (playerId, score) ->
                     view.updatePlayerScore(playerId, score)
                 }
+                .also { disposables.add(it) }
     }
 
+    fun destroy() {
+        disposables.dispose()
+    }
 }

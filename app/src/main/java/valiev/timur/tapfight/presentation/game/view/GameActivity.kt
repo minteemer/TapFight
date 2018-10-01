@@ -74,4 +74,8 @@ class GameActivity : AppCompatActivity(), GameView {
         )
     }
 
+    override fun onDestroy() {
+        presenter.destroy()
+        super.onDestroy()
+    }
 }

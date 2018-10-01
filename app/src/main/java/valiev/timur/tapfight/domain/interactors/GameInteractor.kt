@@ -14,7 +14,12 @@ class GameInteractor {
 
     private val preferences: GamePreferencesRepository = GamePreferencesDAO.instance
 
-    private val score: HashMap<PlayerId, Int> = HashMap()
+    private val score: HashMap<PlayerId, Int> = HashMap(PlayerId.values().size)
+
+    private val playersScore: BehaviorSubject<Pair<PlayerId, Int>> = BehaviorSubject.create()
+
+    /** "Hot" observable that returns new score every time a player increases his score */
+    val userScoreObservable: Observable<Pair<PlayerId, Int>> = playersScore
 
     /**
      * Starts game timer
@@ -39,9 +44,6 @@ class GameInteractor {
                 }
             } ?: 0
 
-    fun getUserScoreObservable() : Observable<Pair<PlayerId, Int>> = playersScore
-
-    private val playersScore: BehaviorSubject<Pair<PlayerId, Int>> = BehaviorSubject.create()
 }
 
 
