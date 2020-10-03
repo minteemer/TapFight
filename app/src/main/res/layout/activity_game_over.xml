@@ -36,7 +36,7 @@
         android:id="@+id/winnerText"
         android:layout_width="0dp"
         android:layout_height="73dp"
-        android:text="@string/default_game_over_text"
+        android:text="@string/game_over_text_draw"
         android:textAlignment="center"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"

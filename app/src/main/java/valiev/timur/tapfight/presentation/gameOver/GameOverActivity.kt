@@ -1,39 +1,43 @@
-package valiev.timur.tapfight.presentation.gameOver;
+package valiev.timur.tapfight.presentation.gameOver
 
-import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.TextView;
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_game_over.*
+import valiev.timur.tapfight.R
+import valiev.timur.tapfight.presentation.startGame.StartGameActivity
+import valiev.timur.tapfight.util.lazyUnsafe
 
-import valiev.timur.tapfight.R;
-import valiev.timur.tapfight.presentation.startGame.StartGameActivity;
+class GameOverActivity : AppCompatActivity() {
 
-public class GameOverActivity extends AppCompatActivity {
+    private val p1Score by lazyUnsafe { intent.getIntExtra(EXTRA_P1_SCORE, 0) }
+    private val p2Score by lazyUnsafe { intent.getIntExtra(EXTRA_P2_SCORE, 0) }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_over);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_game_over)
 
-        Intent intent = getIntent();
+        p1_score.text = p1Score.toString()
+        p2_score.text = p2Score.toString()
 
-        int p1Count = intent.getIntExtra("P1_SCORE", 0);
-        int p2Count = intent.getIntExtra("P2_SCORE", 0);
+        winnerText.setText(
+                when {
+                    p1Score > p2Score -> R.string.game_over_p1_wins
+                    p1Score < p2Score -> R.string.game_over_p1_wins
+                    else -> R.string.game_over_text_draw
+                }
+        )
 
-        TextView p1Score = findViewById(R.id.p1_score);
-        TextView p2Score = findViewById(R.id.p2_score);
-        TextView winner = findViewById(R.id.winnerText);
-
-        p1Score.setText(Integer.toString(p1Count));
-        p2Score.setText(Integer.toString(p2Count));
-
-        if (p1Count > p2Count)
-            winner.setText("Player 1 wins!");
-        else if (p2Count > p1Count)
-            winner.setText("Player 2 wins!");
     }
 
-    public void onBackPressed() {
-        startActivity(new Intent(this, StartGameActivity.class));
+    companion object {
+        private const val EXTRA_P1_SCORE = "p1_score"
+        private const val EXTRA_P2_SCORE = "p2_score"
+
+        fun createIntent(context: Context, player1Score: Int, player2Score: Int) =
+                Intent(context, GameOverActivity::class.java)
+                        .putExtra(EXTRA_P1_SCORE, player1Score)
+                        .putExtra(EXTRA_P2_SCORE, player2Score)
     }
 }

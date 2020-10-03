@@ -1,6 +1,7 @@
 package valiev.timur.tapfight.presentation.game.view
 
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -52,10 +53,7 @@ class GameActivity : AppCompatActivity(), GameView {
     }
 
     override fun endGame(p1Score: Int, p2Score: Int) {
-        val intent = Intent(this, GameOverActivity::class.java)
-        intent.putExtra("P1_SCORE", p1Score)
-        intent.putExtra("P2_SCORE", p2Score)
-        startActivity(intent)
+        startActivity(GameOverActivity.createIntent(this, p1Score, p2Score))
         finish()
     }
 
@@ -77,5 +75,10 @@ class GameActivity : AppCompatActivity(), GameView {
     override fun onDestroy() {
         presenter.destroy()
         super.onDestroy()
+    }
+
+    companion object {
+
+        fun createIntent(context: Context) = Intent(context, GameActivity::class.java)
     }
 }

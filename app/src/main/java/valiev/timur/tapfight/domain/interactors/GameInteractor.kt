@@ -1,8 +1,6 @@
 package valiev.timur.tapfight.domain.interactors
 
 import io.reactivex.Observable
-import io.reactivex.ObservableEmitter
-import io.reactivex.ObservableOnSubscribe
 import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
 import valiev.timur.tapfight.domain.entities.PlayerId

@@ -1,10 +1,8 @@
 package valiev.timur.tapfight.presentation.game.presenter
 
 import android.util.Log
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import valiev.timur.tapfight.domain.entities.PlayerId
 import valiev.timur.tapfight.domain.interactors.GameInteractor

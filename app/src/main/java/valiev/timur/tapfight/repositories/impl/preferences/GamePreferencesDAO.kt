@@ -8,12 +8,18 @@ import valiev.timur.tapfight.repositories.preferences.GamePreferencesRepository
 class GamePreferencesDAO private constructor(preferences: SharedPreferences) :
         BaseSharedPreferences(preferences), GamePreferencesRepository {
 
+    override var fightTimeSec : Long by longPreference("fight_time_sec", 10)
+
     companion object {
         private const val PREFERENCES_FILE_NAME = "game_preferences"
 
         val instance: GamePreferencesDAO by lazy {
-            GamePreferencesDAO(TapFightApplication.instance.getSharedPreferences(PREFERENCES_FILE_NAME, Context.MODE_PRIVATE)) }
+            GamePreferencesDAO(
+                    TapFightApplication.instance.getSharedPreferences(
+                            PREFERENCES_FILE_NAME,
+                            Context.MODE_PRIVATE
+                    )
+            )
+        }
     }
-
-    override var fightTimeSec : Long by longPreference("fight_time_sec", 10)
 }
