@@ -1,4 +1,4 @@
-package valiev.timur.tapfight
+package minteemer.tapfight
 
 import android.app.Application
 

@@ -1,4 +1,4 @@
-package valiev.timur.tapfight.repositories.preferences
+package minteemer.tapfight.repositories.preferences
 
 interface GamePreferencesRepository {
 

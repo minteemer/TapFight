@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="valiev.timur.tapfight.presentation.startGame.StartGameActivity">
+    tools:context="minteemer.tapfight.presentation.startGame.StartGameActivity">
 
     <Button
         android:id="@+id/start_game_button"
@@ -12,14 +12,12 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:background="@color/colorAccent"
-        android:onClick="startGame"
         android:text="@string/start_btn_text"
         android:textColor="#fff"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="valiev.timur.tapfight.presentation.gameOver.GameOverActivity">
+    tools:context="minteemer.tapfight.presentation.gameOver.GameOverActivity">
 
     <TextView
         android:id="@+id/p2_score"

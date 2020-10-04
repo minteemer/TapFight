@@ -1,4 +1,4 @@
-package valiev.timur.tapfight.presentation.startGame
+package minteemer.tapfight.presentation.startGame
 
 import android.content.Context
 import android.content.Intent
@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_start_game.*
 import valiev.timur.tapfight.R
-import valiev.timur.tapfight.presentation.game.view.GameActivity
+import minteemer.tapfight.presentation.game.GameActivity
 
 class StartGameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

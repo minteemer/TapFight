@@ -1,4 +1,4 @@
-package valiev.timur.tapfight.repositories.impl.preferences
+package minteemer.tapfight.repositories.impl.preferences
 
 import android.content.SharedPreferences
 import kotlin.reflect.KProperty
@@ -27,16 +27,7 @@ open class BaseSharedPreferences(private val settings: SharedPreferences) {
 
     protected fun doublePreference(key: String, defaultValue: Double) = PreferenceDelegate(
             { settings.edit().putLong(key, it.toRawBits()).apply() },
-            {
-                // Since version 1.5.1 location fields stored in Double converted to Long instead of Float
-                // this change makes SharedPreferences.getLong() to throwClassCastException
-                // when tries to read Long from a field where previously Float value was saved
-                try {
-                    Double.fromBits(settings.getLong(key, defaultValue.toRawBits()))
-                } catch (e: ClassCastException) {
-                    settings.getFloat(key, defaultValue.toFloat()).toDouble()
-                }
-            }
+            { Double.fromBits(settings.getLong(key, defaultValue.toRawBits())) }
     )
 
     protected fun stringPreference(key: String, defaultValue: String) = PreferenceDelegate(
@@ -51,26 +42,21 @@ open class BaseSharedPreferences(private val settings: SharedPreferences) {
 
 
     class PreferenceDelegate<T>(
-            private val preferenceSaver: (value: T) -> Unit,
-            private val preferenceReader: () -> T
+            private val saveToPreferences: (value: T) -> Unit,
+            private val readFromPreferences: () -> T
     ) {
-
+        @Volatile
         private var value: T? = null
 
-        operator fun getValue(preferences: Any, prop: KProperty<*>): T {
-            return value ?: initValue()
-        }
+        operator fun getValue(preferences: Any, prop: KProperty<*>): T = value ?: initValue()
 
         operator fun setValue(preferences: Any, prop: KProperty<*>, newValue: T) {
             value = newValue
-            preferenceSaver(newValue)
+            saveToPreferences(newValue)
         }
 
-        private fun initValue(): T {
-            val newValue = preferenceReader()
-            value = newValue
-            return newValue
-        }
+        @Synchronized
+        private fun initValue(): T = value ?: readFromPreferences().also { value = it }
     }
 
 }

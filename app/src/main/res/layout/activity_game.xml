@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="valiev.timur.tapfight.presentation.game.view.GameActivity">
+    tools:context="minteemer.tapfight.presentation.game.GameActivity">
 
     <Button
         android:id="@+id/button_p1"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="@color/player1_color"
-        android:onClick="onTapBtn"
         android:text="@string/player_1_btn_text"
         android:textColor="#fff"
         android:textSize="25sp"
@@ -25,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="@color/player2_color"
-        android:onClick="onTapBtn"
         android:text="@string/player_2_btn_text"
         android:textColor="#fff"
         android:textSize="25sp"

@@ -3,14 +3,14 @@
     package="valiev.timur.tapfight">
 
     <application
-        android:name=".TapFightApplication"
-        android:allowBackup="true"
+        android:name="minteemer.tapfight.TapFightApplication"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presentation.startGame.StartGameActivity">
+        <activity android:name="minteemer.tapfight.presentation.startGame.StartGameActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,10 +19,10 @@
         </activity>
 
         <activity
-            android:name=".presentation.game.view.GameActivity"
+            android:name="minteemer.tapfight.presentation.game.GameActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
-        <activity android:name=".presentation.gameOver.GameOverActivity" />
+        <activity android:name="minteemer.tapfight.presentation.gameOver.GameOverActivity" />
 
     </application>
 
