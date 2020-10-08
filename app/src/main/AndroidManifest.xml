@@ -20,7 +20,7 @@
 
         <activity
             android:name="minteemer.tapfight.presentation.game.GameActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity android:name="minteemer.tapfight.presentation.gameOver.GameOverActivity" />
 
