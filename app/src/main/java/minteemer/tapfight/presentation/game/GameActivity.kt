@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_game.*
 import minteemer.tapfight.presentation.gameOver.GameOverActivity
 import valiev.timur.tapfight.R
 import minteemer.tapfight.domain.entities.Player
+import minteemer.tapfight.ui.setOnTapListener
 
 class GameActivity : AppCompatActivity() {
 
@@ -20,9 +21,8 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game) // TODO enlarge tapping area
 
-        // TODO make better tap tracking
-        button_p1.setOnClickListener { viewModel.onTap(Player.P1) }
-        button_p2.setOnClickListener { viewModel.onTap(Player.P2) }
+        button_p1.setOnTapListener { viewModel.onTap(Player.P1) }
+        button_p2.setOnTapListener { viewModel.onTap(Player.P2) }
 
         viewModel.playerScores.observe(this) { scores ->
             p1_score.text = scores.player1Score.toString()
