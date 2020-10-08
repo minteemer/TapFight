@@ -24,10 +24,8 @@ class GameActivity : AppCompatActivity() {
         button_p1.setOnTapListener { viewModel.onTap(Player.P1) }
         button_p2.setOnTapListener { viewModel.onTap(Player.P2) }
 
-        viewModel.playerScores.observe(this) { scores ->
-            p1_score.text = scores.player1Score.toString()
-            p2_score.text = scores.player2Score.toString()
-        }
+        viewModel.player1Score.observe(this) { score -> p1_score.text = score.toString() }
+        viewModel.player2Score.observe(this) { score -> p2_score.text = score.toString() }
 
         viewModel.gameState.observe(this) { gameState ->
             when (gameState) {

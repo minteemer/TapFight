@@ -12,6 +12,7 @@ import minteemer.tapfight.domain.entities.Player
 import minteemer.tapfight.domain.interactors.GameModel
 import minteemer.tapfight.repositories.impl.preferences.GamePreferencesRepositoryImpl
 import minteemer.tapfight.repositories.preferences.GamePreferencesRepository
+import minteemer.tapfight.util.updateValue
 
 class GameViewModel(
     private val gameModel: GameModel = GameModel(),
@@ -19,7 +20,8 @@ class GameViewModel(
 ) : ViewModel(), LifecycleObserver {
 
     val gameState: MutableLiveData<GameState> = MutableLiveData()
-    val playerScores: MutableLiveData<PlayerScores> = MutableLiveData()
+    val player1Score: MutableLiveData<Int> = MutableLiveData()
+    val player2Score: MutableLiveData<Int> = MutableLiveData()
 
     private val disposables = CompositeDisposable()
 
@@ -38,15 +40,13 @@ class GameViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onNext = { scores ->
-                    playerScores.value = PlayerScores(
-                        player1Score = scores[Player.P1] ?: 0,
-                        player2Score = scores[Player.P2] ?: 0
-                    )
+                    player1Score.updateValue(scores[Player.P1] ?: 0)
+                    player2Score.updateValue(scores[Player.P2] ?: 0)
                 },
                 onComplete = {
                     gameState.value = GameState.GameOver(
-                        player1Score = playerScores.value?.player1Score ?: 0,
-                        player2Score = playerScores.value?.player2Score ?: 0
+                        player1Score = player1Score.value ?: 0,
+                        player2Score = player2Score.value ?: 0
                     )
                 },
                 onError = { Log.e("GameActivity", "Game timer error", it) } // TODO Timber?
@@ -57,11 +57,6 @@ class GameViewModel(
     override fun onCleared() {
         disposables.dispose()
     }
-
-    class PlayerScores(
-        val player1Score: Int,
-        val player2Score: Int
-    )
 
     sealed class GameState {
         class Started(val duration: Long) : GameState()

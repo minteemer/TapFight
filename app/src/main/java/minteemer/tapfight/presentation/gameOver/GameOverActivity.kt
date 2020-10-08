@@ -6,12 +6,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_game_over.*
 import valiev.timur.tapfight.R
-import minteemer.tapfight.util.lazyUnsafe
+import minteemer.tapfight.util.fastLazy
 
 class GameOverActivity : AppCompatActivity() {
 
-    private val p1Score by lazyUnsafe { intent.getIntExtra(EXTRA_P1_SCORE, 0) }
-    private val p2Score by lazyUnsafe { intent.getIntExtra(EXTRA_P2_SCORE, 0) }
+    private val p1Score by fastLazy { intent.getIntExtra(EXTRA_P1_SCORE, 0) }
+    private val p2Score by fastLazy { intent.getIntExtra(EXTRA_P2_SCORE, 0) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

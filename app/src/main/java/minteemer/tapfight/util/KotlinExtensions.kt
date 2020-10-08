@@ -1,3 +1,4 @@
 package minteemer.tapfight.util
 
-fun <T> lazyUnsafe(initializer: () -> T) = lazy(LazyThreadSafetyMode.NONE,initializer)
+/** Shortcut for using lazy delegate without thread safety */
+fun <T> fastLazy(initializer: () -> T) = lazy(LazyThreadSafetyMode.NONE, initializer)
