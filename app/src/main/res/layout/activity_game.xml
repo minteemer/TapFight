@@ -35,7 +35,7 @@
         android:id="@+id/timer_bar_view"
         android:layout_width="0dp"
         android:layout_height="16dp"
-        app:color="@color/colorAccent"
+        app:color="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:scoreRatio="50%" />
-
 
     <minteemer.tapfight.ui.view.TapAreaView
         android:id="@+id/tap_area_player1"

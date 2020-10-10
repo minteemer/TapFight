@@ -1,13 +1,14 @@
 package minteemer.tapfight.ui.view
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Rect
+import android.graphics.*
+import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.View
+import androidx.annotation.ColorInt
 import androidx.annotation.FloatRange
 import minteemer.tapfight.R
+
 
 class TimerBarView @JvmOverloads constructor(
     context: Context,
@@ -16,11 +17,16 @@ class TimerBarView @JvmOverloads constructor(
     defStyleRes: Int = 0
 ) : View(context, attributeSet, defStyleAttr, defStyleRes) {
 
-    private val paint: Paint
+    @ColorInt
+    private val barColor: Int
+    private val barDrawable: GradientDrawable
     private val barRect = Rect()
 
     @FloatRange(from = 0.0, to = 1.0)
     private var _timeLeft: Float = 1f
+
+    private var contentWidth: Int = 0
+    private var contentHeight: Int = 0
 
     var timeLeft: Float
         get() = _timeLeft
@@ -32,31 +38,41 @@ class TimerBarView @JvmOverloads constructor(
     init {
         val attributes = context.obtainStyledAttributes(attributeSet, R.styleable.TimerBarView, defStyleAttr, defStyleRes)
 
+        barColor = attributes.getColor(R.styleable.TimerBarView_color, context.getColor(R.color.colorAccent))
         timeLeft = attributes.getFraction(R.styleable.TimerBarView_timeLeft, 1, 0, 1f)
-        paint = Paint().apply {
-            color = attributes.getColor(R.styleable.TimerBarView_color, context.getColor(R.color.colorAccent))
-            style = Paint.Style.FILL
-        }
 
         attributes.recycle()
+
+        barDrawable = GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            gradientType = GradientDrawable.LINEAR_GRADIENT
+            orientation = GradientDrawable.Orientation.LEFT_RIGHT
+            colors = intArrayOf(Color.TRANSPARENT, barColor, barColor, barColor, barColor, Color.TRANSPARENT)
+        }
+    }
+
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        super.onLayout(changed, l, t, r, b)
+
+        contentWidth = width - paddingLeft - paddingRight
+        contentHeight = height - paddingTop - paddingBottom
+
+        barRect.apply {
+            top = paddingTop
+            bottom = paddingTop + contentHeight
+        }
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        val contentWidth = width - paddingLeft - paddingRight
-        val contentHeight = height - paddingTop - paddingBottom
-        val bottomY = contentHeight - paddingBottom
         val barMargin = (contentWidth * (1 - timeLeft) / 2).toInt()
 
-        barRect.apply {
-            bottom = bottomY
-            top = paddingTop
+        barDrawable.bounds = barRect.apply {
             left = paddingLeft + barMargin
             right = width - paddingRight - barMargin
         }
 
-        canvas.drawRect(barRect, paint)
+        barDrawable.draw(canvas)
     }
-
 }
