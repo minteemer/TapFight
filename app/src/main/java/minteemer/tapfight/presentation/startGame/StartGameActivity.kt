@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_start_game.*
-import valiev.timur.tapfight.R
+import minteemer.tapfight.R
 import minteemer.tapfight.presentation.game.GameActivity
 
 class StartGameActivity : AppCompatActivity() {

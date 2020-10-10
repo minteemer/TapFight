@@ -6,70 +6,59 @@
     android:layout_height="match_parent"
     tools:context="minteemer.tapfight.presentation.game.GameActivity">
 
-    <Button
-        android:id="@+id/button_p1"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@color/player1_color"
-        android:text="@string/player_1_btn_text"
-        android:textColor="#fff"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:rotation = "180"
-        android:id="@+id/button_p2"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@color/player2_color"
-        android:text="@string/player_2_btn_text"
-        android:textColor="#fff"
-        android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/p1_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/initial_score_field_text"
-        android:textColor="@color/player1_color"
+        android:textColor="@color/player1"
         android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/button_p1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progress_game_time" />
+        app:layout_constraintTop_toBottomOf="@+id/score_ratio_view" />
 
     <TextView
-        android:rotation = "180"
         android:id="@+id/p2_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:rotation="180"
         android:text="@string/initial_score_field_text"
-        android:textColor="@color/player2_color"
+        android:textColor="@color/player2"
         android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/progress_game_time"
+        app:layout_constraintBottom_toTopOf="@+id/score_ratio_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_p2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ProgressBar
-        android:id="@+id/progress_game_time"
-        style="?android:attr/progressBarStyleHorizontal"
+    <minteemer.tapfight.ui.view.ScoreRatioView
+        android:id="@+id/score_ratio_view"
         android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:max="1000"
-        android:progress="0"
+        android:layout_height="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.498" />
+        app:scoreRatio="0.5" />
+
+    <minteemer.tapfight.ui.view.TapAreaView
+        android:id="@+id/tap_area_player1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tap_area_player2"
+        tools:visibility="gone" />
+
+    <minteemer.tapfight.ui.view.TapAreaView
+        android:id="@+id/tap_area_player2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/tap_area_player1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

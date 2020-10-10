@@ -1,31 +1,40 @@
 package minteemer.tapfight.presentation.game
 
-import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.animation.LinearInterpolator
 import androidx.activity.viewModels
 import kotlinx.android.synthetic.main.activity_game.*
 import minteemer.tapfight.presentation.gameOver.GameOverActivity
-import valiev.timur.tapfight.R
+import minteemer.tapfight.R
 import minteemer.tapfight.domain.entities.Player
-import minteemer.tapfight.ui.setOnTapListener
 
 class GameActivity : AppCompatActivity() {
 
     private val viewModel: GameViewModel by viewModels()
 
+    // TODO make animator
+    private var p1Score: Int = 1
+    private var p2Score: Int = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_game) // TODO enlarge tapping area
+        setContentView(R.layout.activity_game)
 
-        button_p1.setOnTapListener { viewModel.onTap(Player.P1) }
-        button_p2.setOnTapListener { viewModel.onTap(Player.P2) }
+        tap_area_player1.setOnTapListener { viewModel.onTap(Player.P1) }
+        tap_area_player2.setOnTapListener { viewModel.onTap(Player.P2) }
 
-        viewModel.player1Score.observe(this) { score -> p1_score.text = score.toString() }
-        viewModel.player2Score.observe(this) { score -> p2_score.text = score.toString() }
+        viewModel.player1Score.observe(this) { score ->
+            p1Score = score
+            p1_score.text = score.toString()
+            updateScore()
+        }
+        viewModel.player2Score.observe(this) { score ->
+            p2Score = score
+            p2_score.text = score.toString()
+            updateScore()
+        }
 
         viewModel.gameState.observe(this) { gameState ->
             when (gameState) {
@@ -37,8 +46,14 @@ class GameActivity : AppCompatActivity() {
         lifecycle.addObserver(viewModel)
     }
 
+    private fun updateScore() {
+        val p1Score = p1Score.coerceAtLeast(1)
+        val p2Score = p2Score.coerceAtLeast(1)
+        score_ratio_view.scoreRatio = p1Score / (p1Score + p2Score).toFloat()
+    }
+
     private fun startTimerAnimation(gameDuration: Long) {
-        ObjectAnimator.ofInt(
+        /*ObjectAnimator.ofInt(
             progress_game_time,
             "progress",
             progress_game_time.progress,
@@ -47,7 +62,7 @@ class GameActivity : AppCompatActivity() {
             interpolator = LinearInterpolator()
             duration = gameDuration * 1000
             start()
-        }
+        }*/
     }
 
     private fun finishGame(p1Score: Int, p2Score: Int) {
