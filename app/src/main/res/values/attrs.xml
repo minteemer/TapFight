@@ -1,0 +1,12 @@
+<resources>
+    <declare-styleable name="ScoreRatioView">
+        <attr name="leftColor" format="color" />
+        <attr name="rightColor" format="color" />
+        <attr name="scoreRatio" format="fraction" />
+    </declare-styleable>
+
+    <declare-styleable name="TimerBarView">
+        <attr name="color" format="color" />
+        <attr name="timeLeft" format="fraction" />
+    </declare-styleable>
+</resources>

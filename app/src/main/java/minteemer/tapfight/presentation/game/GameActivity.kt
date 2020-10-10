@@ -1,9 +1,11 @@
 package minteemer.tapfight.presentation.game
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.animation.LinearInterpolator
 import androidx.activity.viewModels
 import kotlinx.android.synthetic.main.activity_game.*
 import minteemer.tapfight.presentation.gameOver.GameOverActivity
@@ -53,16 +55,16 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun startTimerAnimation(gameDuration: Long) {
-        /*ObjectAnimator.ofInt(
-            progress_game_time,
-            "progress",
-            progress_game_time.progress,
-            progress_game_time.max
+        ObjectAnimator.ofFloat(
+            timer_bar_view,
+            "timeLeft",
+            1f,
+            0f
         ).apply {
             interpolator = LinearInterpolator()
             duration = gameDuration * 1000
             start()
-        }*/
+        }
     }
 
     private fun finishGame(p1Score: Int, p2Score: Int) {

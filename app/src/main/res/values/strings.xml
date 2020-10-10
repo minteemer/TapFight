@@ -5,8 +5,8 @@
     <string name="player_2_btn_text">Player 2</string>
     <string name="initial_score_field_text">0</string>
 
-    <string name="game_over_p1_wins">Player 1 wins!</string>
-    <string name="game_over_p2_wins">Player 2 wins!</string>
+    <string name="game_over_p1_wins">Red wins!</string>
+    <string name="game_over_p2_wins">Blue wins!</string>
     <string name="game_over_text_draw">Draw</string>
 
 </resources>

@@ -36,7 +36,7 @@ class ScoreRatioView @JvmOverloads constructor(
     init {
         val attributes = context.obtainStyledAttributes(attributeSet, R.styleable.ScoreRatioView, defStyleAttr, defStyleRes)
 
-        scoreRatio = attributes.getFloat(R.styleable.ScoreRatioView_scoreRatio, 0.5f)
+        scoreRatio = attributes.getFraction(R.styleable.ScoreRatioView_scoreRatio, 1, 0, 0.5f)
         leftBarPaint = getBarPaint(attributes.getColor(R.styleable.ScoreRatioView_leftColor, context.getColor(R.color.player1)))
         rightBarPaint = getBarPaint(attributes.getColor(R.styleable.ScoreRatioView_rightColor, context.getColor(R.color.player2)))
 
@@ -44,8 +44,8 @@ class ScoreRatioView @JvmOverloads constructor(
     }
 
 
-    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-        super.onLayout(changed, l, t, r, b)
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
 
         val contentWidth = width - paddingLeft - paddingRight
         val contentHeight = height - paddingTop - paddingBottom
@@ -65,10 +65,6 @@ class ScoreRatioView @JvmOverloads constructor(
             top = paddingTop
             bottom = bottomY
         }
-    }
-
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
 
         canvas.drawRect(leftBarRect, leftBarPaint)
         canvas.drawRect(rightBarRect, rightBarPaint)
@@ -77,6 +73,5 @@ class ScoreRatioView @JvmOverloads constructor(
     private fun getBarPaint(@ColorInt color: Int) = Paint().apply {
         this.color = color
         style = Paint.Style.FILL
-        strokeWidth = 0f
     }
 }

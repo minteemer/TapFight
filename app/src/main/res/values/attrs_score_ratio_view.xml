@@ -1,7 +1,0 @@
-<resources>
-    <declare-styleable name="ScoreRatioView">
-        <attr name="leftColor" format="color" />
-        <attr name="rightColor" format="color" />
-        <attr name="scoreRatio" format="float" />
-    </declare-styleable>
-</resources>
