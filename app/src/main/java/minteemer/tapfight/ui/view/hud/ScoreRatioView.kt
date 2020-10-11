@@ -1,4 +1,4 @@
-package minteemer.tapfight.ui.view
+package minteemer.tapfight.ui.view.hud
 
 import android.content.Context
 import android.graphics.Canvas
@@ -36,7 +36,7 @@ class ScoreRatioView @JvmOverloads constructor(
     init {
         val attributes = context.obtainStyledAttributes(attributeSet, R.styleable.ScoreRatioView, defStyleAttr, defStyleRes)
 
-        scoreRatio = attributes.getFraction(R.styleable.ScoreRatioView_scoreRatio, 1, 0, 0.5f)
+        _scoreRatio = attributes.getFraction(R.styleable.ScoreRatioView_scoreRatio, 1, 0, 0.5f)
         leftBarPaint = getBarPaint(attributes.getColor(R.styleable.ScoreRatioView_leftColor, context.getColor(R.color.player1)))
         rightBarPaint = getBarPaint(attributes.getColor(R.styleable.ScoreRatioView_rightColor, context.getColor(R.color.player2)))
 
@@ -73,5 +73,6 @@ class ScoreRatioView @JvmOverloads constructor(
     private fun getBarPaint(@ColorInt color: Int) = Paint().apply {
         this.color = color
         style = Paint.Style.FILL
+        isAntiAlias = true
     }
 }

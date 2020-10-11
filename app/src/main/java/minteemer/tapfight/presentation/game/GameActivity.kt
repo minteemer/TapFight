@@ -24,8 +24,8 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        tap_area_player1.setOnTapListener { viewModel.onTap(Player.P1) }
-        tap_area_player2.setOnTapListener { viewModel.onTap(Player.P2) }
+        tap_area_player1.setOnBubbleTapListener { viewModel.onTap(Player.P1) }
+        tap_area_player2.setOnBubbleTapListener { viewModel.onTap(Player.P2) }
 
         viewModel.player1Score.observe(this) { score ->
             p1Score = score
@@ -46,6 +46,12 @@ class GameActivity : AppCompatActivity() {
         }
 
         lifecycle.addObserver(viewModel)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        tap_area_player1.startSpawning()
+        tap_area_player2.startSpawning()
     }
 
     private fun updateScore() {

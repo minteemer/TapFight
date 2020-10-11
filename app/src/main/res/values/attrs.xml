@@ -9,4 +9,9 @@
         <attr name="color" format="color" />
         <attr name="timeLeft" format="fraction" />
     </declare-styleable>
+
+    <declare-styleable name="BubblesSpawnerView">
+        <attr name="bubbleColor" format="color" />
+        <attr name="bubbleRadius" format="dimension" />
+    </declare-styleable>
 </resources>

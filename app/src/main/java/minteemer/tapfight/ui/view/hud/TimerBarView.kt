@@ -1,4 +1,4 @@
-package minteemer.tapfight.ui.view
+package minteemer.tapfight.ui.view.hud
 
 import android.content.Context
 import android.graphics.*
@@ -38,7 +38,7 @@ class TimerBarView @JvmOverloads constructor(
     init {
         val attributes = context.obtainStyledAttributes(attributeSet, R.styleable.TimerBarView, defStyleAttr, defStyleRes)
 
-        barColor = attributes.getColor(R.styleable.TimerBarView_color, context.getColor(R.color.colorAccent))
+        barColor = attributes.getColor(R.styleable.TimerBarView_color, context.getColor(R.color.accent))
         timeLeft = attributes.getFraction(R.styleable.TimerBarView_timeLeft, 1, 0, 1f)
 
         attributes.recycle()
