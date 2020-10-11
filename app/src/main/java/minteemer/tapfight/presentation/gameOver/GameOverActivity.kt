@@ -23,7 +23,7 @@ class GameOverActivity : AppCompatActivity() {
         winnerText.setText(
             when {
                 p1Score > p2Score -> R.string.game_over_p1_wins
-                p1Score < p2Score -> R.string.game_over_p1_wins
+                p1Score < p2Score -> R.string.game_over_p2_wins
                 else -> R.string.game_over_text_draw
             }
         )
