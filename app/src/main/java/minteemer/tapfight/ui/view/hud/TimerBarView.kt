@@ -38,7 +38,7 @@ class TimerBarView @JvmOverloads constructor(
     init {
         val attributes = context.obtainStyledAttributes(attributeSet, R.styleable.TimerBarView, defStyleAttr, defStyleRes)
 
-        barColor = attributes.getColor(R.styleable.TimerBarView_color, context.getColor(R.color.accent))
+        barColor = attributes.getColor(R.styleable.TimerBarView_barColor, context.getColor(R.color.accent))
         timeLeft = attributes.getFraction(R.styleable.TimerBarView_timeLeft, 1, 0, 1f)
 
         attributes.recycle()

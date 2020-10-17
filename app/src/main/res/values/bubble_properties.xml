@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="bubble_radius">50dp</dimen>
+    <integer name="bubble_lifetime">1000</integer>
+    <integer name="bubble_timeout_anim_time">200</integer>
+    <integer name="bubble_tap_anim_time">200</integer>
+    <dimen name="back_bubble_size_ratio">1.66</dimen>
+</resources>

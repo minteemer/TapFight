@@ -1,0 +1,28 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:name="bubble"
+    android:width="50dp"
+    android:height="50dp"
+    android:viewportWidth="500"
+    android:viewportHeight="500">
+
+    <group
+        android:name="backGroup"
+        android:pivotX="250"
+        android:pivotY="250">
+        <path
+            android:name="back"
+            android:fillAlpha="0.5"
+            android:fillColor="?attr/bubbleColor"
+            android:pathData="m250 100c82.8 0 150 67.2 150 150c0 82.8 -67.2 150 -150 150c-82.8 0 -150 -67.2 -150 -150c0 -82.8 67.2 -150 150 -150z" />
+    </group>
+
+    <group
+        android:name="frontGroup"
+        android:pivotX="250"
+        android:pivotY="250">
+        <path
+            android:name="front"
+            android:fillColor="?attr/bubbleColor"
+            android:pathData="m250 100c82.8 0 150 67.2 150 150c0 82.8 -67.2 150 -150 150c-82.8 0 -150 -67.2 -150 -150c0 -82.8 67.2 -150 150 -150z" />
+    </group>
+</vector>

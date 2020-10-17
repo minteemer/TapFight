@@ -3,14 +3,17 @@ package minteemer.tapfight.presentation.game
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.AnimatedVectorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.animation.LinearInterpolator
 import androidx.activity.viewModels
+import androidx.core.view.postDelayed
 import kotlinx.android.synthetic.main.activity_game.*
 import minteemer.tapfight.presentation.gameOver.GameOverActivity
 import minteemer.tapfight.R
 import minteemer.tapfight.domain.entities.Player
+import minteemer.tapfight.util.getDrawableCompat
 
 class GameActivity : AppCompatActivity() {
 

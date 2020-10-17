@@ -6,7 +6,7 @@
     </declare-styleable>
 
     <declare-styleable name="TimerBarView">
-        <attr name="color" format="color" />
+        <attr name="barColor" format="color" />
         <attr name="timeLeft" format="fraction" />
     </declare-styleable>
 

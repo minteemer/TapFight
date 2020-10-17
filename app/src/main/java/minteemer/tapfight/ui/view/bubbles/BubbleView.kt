@@ -1,49 +1,58 @@
 package minteemer.tapfight.ui.view.bubbles
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Paint
+import android.graphics.drawable.Animatable2.AnimationCallback
+import android.graphics.drawable.AnimatedVectorDrawable
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-import android.view.View
-import androidx.annotation.ColorInt
-import kotlin.math.min
+import androidx.appcompat.widget.AppCompatImageView
+import minteemer.tapfight.R
+import minteemer.tapfight.ui.util.OnTapListener
+import minteemer.tapfight.ui.util.setOnTapListener
+import minteemer.tapfight.util.getDrawableCompat
+
 
 class BubbleView @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0,
-    defStyleRes: Int = 0
-) : View(context, attributeSet, defStyleAttr, defStyleRes) {
+    private var onTapListener: OnTapListener? = null,
+    private val onTerminalStateReached: ((view: BubbleView) -> Unit)? = null
+) : AppCompatImageView(context, attributeSet, defStyleAttr) {
+
+    private val lifetimeDrawable: AnimatedVectorDrawable = context.getDrawableCompat(R.drawable.bubble_lifetime) as AnimatedVectorDrawable
+    private val timeoutDrawable: AnimatedVectorDrawable = context.getDrawableCompat(R.drawable.bubble_timeout) as AnimatedVectorDrawable
+    private val tapDrawable: AnimatedVectorDrawable = context.getDrawableCompat(R.drawable.bubble_tap) as AnimatedVectorDrawable
 
     init {
-        isClickable = true
-    }
-
-    private var centerX = 0f
-    private var centerY = 0f
-    private var radius = 0f
-    private var paint = Paint().apply {
-        style = Paint.Style.FILL
-    }
-
-    var color: Int
-        @ColorInt get() = paint.color
-        set(@ColorInt value) {
-            paint.color = value
-            invalidate()
+        setOnTapListener { view ->
+            onTapListener?.invoke(view)
+            toTerminalState(tapDrawable)
         }
-
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
-
-        centerX = (width / 2).toFloat()
-        centerY = (height / 2).toFloat()
-        radius = (min(width, height) / 2).toFloat()
     }
 
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-
-        canvas.drawCircle(centerX, centerY, radius, paint)
+    fun startLifetimeAnimation() {
+        isClickable = true
+        setImageDrawable(lifetimeDrawable)
+        lifetimeDrawable.start()
     }
+
+    fun startTimeoutAnimation() {
+        toTerminalState(timeoutDrawable)
+    }
+
+    private fun toTerminalState(animDrawable: AnimatedVectorDrawable) {
+        isClickable = false
+        setImageDrawable(animDrawable)
+        animDrawable.start()
+        animDrawable.registerAnimationCallback(terminalStateAnimationCallback)
+        onTapListener = null
+    }
+
+    private val terminalStateAnimationCallback: AnimationCallback =
+        object : AnimationCallback() {
+            override fun onAnimationEnd(drawable: Drawable?) {
+                onTerminalStateReached?.invoke(this@BubbleView)
+            }
+        }
 }

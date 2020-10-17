@@ -20,4 +20,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="Player1">
+        <item name="bubbleColor">@color/player1</item>
+    </style>
+
+    <style name="Player2">
+        <item name="bubbleColor">@color/player2</item>
+    </style>
+
 </resources>

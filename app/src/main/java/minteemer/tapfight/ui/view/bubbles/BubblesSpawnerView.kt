@@ -2,7 +2,6 @@ package minteemer.tapfight.ui.view.bubbles
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.ColorInt
 import androidx.annotation.Px
@@ -10,7 +9,6 @@ import androidx.core.view.children
 import androidx.core.view.postDelayed
 import minteemer.tapfight.R
 import minteemer.tapfight.ui.util.OnTapListener
-import minteemer.tapfight.ui.util.setOnTapListener
 import kotlin.random.Random
 
 class BubblesSpawnerView @JvmOverloads constructor(
@@ -74,26 +72,24 @@ class BubblesSpawnerView @JvmOverloads constructor(
 
     private fun spawnBubble() {
         // TODO BubbleView recycling?
-        val bubbleView = BubbleView(context).apply {
-            color = bubbleColor
-            setOnTapListener(::onBubbleTap)
-        }
+        val bubbleView = BubbleView(
+            context = context,
+            onTapListener = onBubbleTap,
+            onTerminalStateReached = ::onBubbleTerminalStateReached
+        )
         bubbleLocations[bubbleView] = BubbleLocation.random(bubbleAreaWidth, bubbleAreaHeight)
         addView(bubbleView)
+        bubbleView.startLifetimeAnimation()
 
         // TODO removeCallbacks ?
         postDelayed(bubbleSpawnDelayMills, ::spawnBubble)
-        postDelayed(bubbleLifetimeMills) {
-            removeView(bubbleView)
-            bubbleLocations.remove(bubbleView)
-        }
+        postDelayed(bubbleLifetimeMills, bubbleView::startTimeoutAnimation)
     }
 
-    private fun onBubbleTap(view: View) {
+    private fun onBubbleTerminalStateReached(view: BubbleView) {
         removeView(view)
-        onBubbleTap?.invoke(view)
+        bubbleLocations.remove(view)
     }
-
 
     private class BubbleLocation(
         var centerX: Int = 0,

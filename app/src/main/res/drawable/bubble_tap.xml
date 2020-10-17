@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/bubble">
+
+    <target
+        android:name="backGroup"
+        android:animation="@animator/bubble_tap_back_expand" />
+
+    <target
+        android:name="back"
+        android:animation="@animator/bubble_tap_back_fade" />
+
+    <target
+        android:name="front"
+        android:animation="@animator/bubble_tap_front_hide" />
+
+</animated-vector>
