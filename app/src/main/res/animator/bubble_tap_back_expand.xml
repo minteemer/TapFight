@@ -3,7 +3,6 @@
     <objectAnimator
         android:duration="@integer/bubble_tap_anim_time"
         android:propertyName="scaleY"
-        android:repeatMode="restart"
         android:valueFrom="1.0"
         android:valueTo="@dimen/back_bubble_size_ratio"
         android:valueType="floatType" />
@@ -11,7 +10,6 @@
     <objectAnimator
         android:duration="@integer/bubble_tap_anim_time"
         android:propertyName="scaleX"
-        android:repeatMode="restart"
         android:valueFrom="1.0"
         android:valueTo="@dimen/back_bubble_size_ratio"
         android:valueType="floatType" />
