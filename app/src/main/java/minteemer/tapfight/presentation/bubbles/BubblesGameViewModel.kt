@@ -9,17 +9,17 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import minteemer.tapfight.domain.entity.GameEvent
+import minteemer.tapfight.domain.entity.MutableScores
 import minteemer.tapfight.domain.entity.Player
+import minteemer.tapfight.domain.entity.Scores
 import minteemer.tapfight.domain.model.BubblesGameModeModel
-import minteemer.tapfight.util.extensions.setValueIfChanged
 
 class BubblesGameViewModel(
     private val gameModel: BubblesGameModeModel = BubblesGameModeModel()
 ) : ViewModel(), LifecycleObserver {
 
     val gameState: MutableLiveData<GameState> = MutableLiveData()
-    val player1Score: MutableLiveData<Int> = MutableLiveData()
-    val player2Score: MutableLiveData<Int> = MutableLiveData()
+    val scores: MutableLiveData<Scores> = MutableLiveData()
     val bubbleSpawnEvents: MutableLiveData<Player> = MutableLiveData()
 
     private val disposables = CompositeDisposable()
@@ -49,8 +49,7 @@ class BubblesGameViewModel(
         Log.d("game", gameEvent::class.java.simpleName)
         when (gameEvent) {
             is GameEvent.ScoreUpdated -> {
-                player1Score.setValueIfChanged(gameEvent.scores[Player.P1])
-                player2Score.setValueIfChanged(gameEvent.scores[Player.P2])
+                scores.value = gameEvent.scores
             }
             is GameEvent.SpawnBubble -> {
                 bubbleSpawnEvents.value = gameEvent.player
@@ -59,10 +58,7 @@ class BubblesGameViewModel(
                 gameState.value = GameState.Started(gameEvent.duration)
             }
             GameEvent.GameOver -> {
-                gameState.value = GameState.GameOver(
-                    player1Score = player1Score.value ?: 0,
-                    player2Score = player2Score.value ?: 0
-                )
+                gameState.value = GameState.GameOver(scores.value ?: MutableScores())
             }
         }
     }
@@ -73,6 +69,6 @@ class BubblesGameViewModel(
 
     sealed class GameState {
         class Started(val duration: Long) : GameState()
-        class GameOver(val player1Score: Int, val player2Score: Int) : GameState()
+        class GameOver(val scores: Scores) : GameState()
     }
 }

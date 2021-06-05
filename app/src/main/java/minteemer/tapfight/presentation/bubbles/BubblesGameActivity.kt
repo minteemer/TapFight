@@ -10,15 +10,11 @@ import androidx.activity.viewModels
 import kotlinx.android.synthetic.main.activity_game.*
 import minteemer.tapfight.presentation.gameOver.GameOverActivity
 import minteemer.tapfight.R
-import minteemer.tapfight.domain.entity.Player
+import minteemer.tapfight.domain.entity.*
 
 class BubblesGameActivity : AppCompatActivity() {
 
     private val viewModel: BubblesGameViewModel by viewModels()
-
-    // TODO make animator
-    private var p1Score: Int = 1
-    private var p2Score: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,15 +28,10 @@ class BubblesGameActivity : AppCompatActivity() {
             tapArea.setOnBubbleTimeoutListener { viewModel.onBubbleTimeout(player) }
         }
 
-        viewModel.player1Score.observe(this) { score ->
-            p1Score = score
-            p1_score.text = score.toString()
-            updateScore()
-        }
-        viewModel.player2Score.observe(this) { score ->
-            p2Score = score
-            p2_score.text = score.toString()
-            updateScore()
+        viewModel.scores.observe(this) { scores ->
+            p1_score.text = scores.player1.toString()
+            p2_score.text = scores.player2.toString()
+            updateScore(scores)
         }
 
         viewModel.bubbleSpawnEvents.observe(this) { player ->
@@ -54,16 +45,16 @@ class BubblesGameActivity : AppCompatActivity() {
         viewModel.gameState.observe(this) { gameState ->
             when (gameState) {
                 is BubblesGameViewModel.GameState.Started -> startTimerAnimation(gameState.duration)
-                is BubblesGameViewModel.GameState.GameOver -> finishGame(gameState.player1Score, gameState.player2Score)
+                is BubblesGameViewModel.GameState.GameOver -> finishGame(p1Score = gameState.scores.player1, p2Score = gameState.scores.player2)
             }
         }
 
         lifecycle.addObserver(viewModel)
     }
 
-    private fun updateScore() {
-        val p1Score = p1Score.coerceAtLeast(1)
-        val p2Score = p2Score.coerceAtLeast(1)
+    private fun updateScore(scores: Scores) {
+        val p1Score = scores.player1.coerceAtLeast(1)
+        val p2Score = scores.player2.coerceAtLeast(1)
         score_ratio_view.scoreRatio = p1Score / (p1Score + p2Score).toFloat()
     }
 
