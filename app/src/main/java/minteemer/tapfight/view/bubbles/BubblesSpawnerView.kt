@@ -1,4 +1,4 @@
-package minteemer.tapfight.ui.view.bubbles
+package minteemer.tapfight.view.bubbles
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,7 +8,6 @@ import androidx.annotation.Px
 import androidx.core.view.children
 import androidx.core.view.postDelayed
 import minteemer.tapfight.R
-import minteemer.tapfight.ui.util.OnTapListener
 import kotlin.random.Random
 
 class BubblesSpawnerView @JvmOverloads constructor(
@@ -30,12 +29,11 @@ class BubblesSpawnerView @JvmOverloads constructor(
     private val bubbleAreaHeight: Int
         get() = height - paddingTop - paddingBottom - bubbleRadius * 2
 
-    private val bubbleLocations: MutableMap<BubbleView, BubbleLocation> = mutableMapOf()
-    private var onBubbleTap: OnTapListener? = null
+    private val bubbleTimeoutMills: Long = context.resources.getInteger(R.integer.bubble_lifetime).toLong()
 
-    // TODO control spawn rate and lifetime from game logic / config
-    var bubbleSpawnDelayMills: Long = 200
-    var bubbleLifetimeMills: Long = 1000
+    private val bubbleLocations: MutableMap<BubbleView, BubbleLocation> = mutableMapOf()
+    private var onBubbleTap: (() -> Unit)? = null
+    private var onBubbleTimeout: (() -> Unit)? = null
 
     init {
         val attr = context.obtainStyledAttributes(attributeSet, R.styleable.BubblesSpawnerView, defStyleAttr, defStyleRes)
@@ -46,12 +44,30 @@ class BubblesSpawnerView @JvmOverloads constructor(
         attr.recycle()
     }
 
-    fun startSpawning() {
-        post(::spawnBubble)
+    fun setOnBubbleTapListener(onTap: () -> Unit) {
+        onBubbleTap = onTap
     }
 
-    fun setOnBubbleTapListener(onTap: OnTapListener) {
-        onBubbleTap = onTap
+    fun setOnBubbleTimeoutListener(onTimeout: () -> Unit) {
+        onBubbleTimeout = onTimeout
+    }
+
+    fun spawnBubble() {
+        // TODO BubbleView recycling?
+        val bubbleView = BubbleView(
+            context = context,
+            onTapListener = onBubbleTap,
+            onTerminalStateReached = ::onBubbleTerminalStateReached
+        )
+        bubbleLocations[bubbleView] = BubbleLocation.random(bubbleAreaWidth, bubbleAreaHeight)
+        addView(bubbleView)
+        bubbleView.startLifetimeAnimation()
+
+        // TODO removeCallbacks ?
+        postDelayed(bubbleTimeoutMills) {
+            onBubbleTimeout?.invoke()
+            bubbleView.startTimeoutAnimation()
+        }
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
@@ -68,22 +84,6 @@ class BubblesSpawnerView @JvmOverloads constructor(
                 )
             }
         }
-    }
-
-    private fun spawnBubble() {
-        // TODO BubbleView recycling?
-        val bubbleView = BubbleView(
-            context = context,
-            onTapListener = onBubbleTap,
-            onTerminalStateReached = ::onBubbleTerminalStateReached
-        )
-        bubbleLocations[bubbleView] = BubbleLocation.random(bubbleAreaWidth, bubbleAreaHeight)
-        addView(bubbleView)
-        bubbleView.startLifetimeAnimation()
-
-        // TODO removeCallbacks ?
-        postDelayed(bubbleSpawnDelayMills, ::spawnBubble)
-        postDelayed(bubbleLifetimeMills, bubbleView::startTimeoutAnimation)
     }
 
     private fun onBubbleTerminalStateReached(view: BubbleView) {

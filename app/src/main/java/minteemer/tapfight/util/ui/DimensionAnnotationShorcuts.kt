@@ -1,4 +1,4 @@
-package minteemer.tapfight.util
+package minteemer.tapfight.util.ui
 
 import androidx.annotation.Dimension
 

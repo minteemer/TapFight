@@ -1,4 +1,4 @@
-package minteemer.tapfight.ui.view.bubbles
+package minteemer.tapfight.view.bubbles
 
 import android.content.Context
 import android.graphics.drawable.Animatable2.AnimationCallback
@@ -7,16 +7,15 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import minteemer.tapfight.R
-import minteemer.tapfight.ui.util.OnTapListener
-import minteemer.tapfight.ui.util.setOnTapListener
-import minteemer.tapfight.util.getDrawableCompat
+import minteemer.tapfight.util.ui.setOnTapHandler
+import minteemer.tapfight.util.extensions.getDrawableCompat
 
 
 class BubbleView @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyleAttr: Int = 0,
-    private var onTapListener: OnTapListener? = null,
+    private var onTapListener: (() -> Unit)? = null,
     private val onTerminalStateReached: ((view: BubbleView) -> Unit)? = null
 ) : AppCompatImageView(context, attributeSet, defStyleAttr) {
 
@@ -25,9 +24,10 @@ class BubbleView @JvmOverloads constructor(
     private val tapDrawable: AnimatedVectorDrawable = context.getDrawableCompat(R.drawable.bubble_tap) as AnimatedVectorDrawable
 
     init {
-        setOnTapListener { view ->
-            onTapListener?.invoke(view)
+        setOnTapHandler { view ->
+            onTapListener?.invoke()
             toTerminalState(tapDrawable)
+            true
         }
     }
 
@@ -42,11 +42,11 @@ class BubbleView @JvmOverloads constructor(
     }
 
     private fun toTerminalState(animDrawable: AnimatedVectorDrawable) {
+        onTapListener = null
         isClickable = false
         setImageDrawable(animDrawable)
         animDrawable.start()
         animDrawable.registerAnimationCallback(terminalStateAnimationCallback)
-        onTapListener = null
     }
 
     private val terminalStateAnimationCallback: AnimationCallback =

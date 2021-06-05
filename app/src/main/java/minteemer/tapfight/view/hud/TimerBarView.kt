@@ -1,4 +1,4 @@
-package minteemer.tapfight.ui.view.hud
+package minteemer.tapfight.view.hud
 
 import android.content.Context
 import android.graphics.*

@@ -1,22 +1,26 @@
-package minteemer.tapfight.ui.util
+package minteemer.tapfight.util.ui
 
 import android.annotation.SuppressLint
 import android.view.MotionEvent
 import android.view.View
 
-typealias OnTapListener = (view: View) -> Unit
+/**
+ * returns true if event is consumed, false to pass event to next listener
+ */
+typealias OnTapHandler = (view: View) -> Boolean
 
-class TapDetector(private val onTap: OnTapListener) : View.OnTouchListener {
+class TapDetector(private val onTap: OnTapHandler) : View.OnTouchListener {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouch(view: View, event: MotionEvent): Boolean {
         val maskedAction = event.actionMasked
+        // FIXME multiple fingers issue?
         if (maskedAction == MotionEvent.ACTION_DOWN || maskedAction == MotionEvent.ACTION_POINTER_DOWN) {
-            onTap(view)
+            return onTap(view)
         }
 
         return false // touch event is not consumed
     }
 }
 
-fun View.setOnTapListener(onTap: OnTapListener) = setOnTouchListener(TapDetector(onTap))
+fun View.setOnTapHandler(onTap: OnTapHandler) = setOnTouchListener(TapDetector(onTap))

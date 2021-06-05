@@ -1,4 +1,4 @@
-package minteemer.tapfight.util
+package minteemer.tapfight.util.extensions
 
 import android.content.Context
 import androidx.annotation.DrawableRes
