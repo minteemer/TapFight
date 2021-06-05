@@ -4,15 +4,17 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
+
     defaultConfig {
         applicationId 'minteemer.tapfight'
         minSdkVersion 23
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 30000
         versionName "3.0.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
+
     buildTypes {
         release {
             minifyEnabled false // TODO add minify
@@ -32,31 +34,28 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // AndroidX
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation "androidx.activity:activity-ktx:$activity_version"
+    implementation Libs.appcompat
+    implementation Libs.constraintlayout
+    implementation Libs.activity
 
     // RxJava
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
+    implementation Libs.rxAndroid
+    implementation Libs.rxKotlin
 
-    // Dagger
-    implementation 'com.google.dagger:dagger-android:2.29.1'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.29.1'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.29.1'
+    // Hilt
+    implementation Libs.hiltAndroid
+    kapt Libs.hiltCompiler
+    testImplementation Libs.hiltTesting
 
     // ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version" // Saved state module for ViewModel
-    kapt "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version" // Annotation processor
+    implementation Libs.viewmodelKtx
+    implementation Libs.livedataKtx
+    implementation Libs.viewmodelSavedState
+    kapt Libs.lifecycleCommon
 
     // Testing
-    testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    testImplementation Libs.junit
+    androidTestImplementation Libs.androidxJunit
 }
 repositories {
     mavenCentral()

@@ -1,0 +1,39 @@
+ext {
+    androidPluginVersion = '4.2.1'
+    kotlinVersion = '1.5.10'
+    lifecycleVersion = '2.3.1'
+    activityVersion = '1.2.3'
+    appcompatVersion = '1.3.0'
+    constraintVersion = '2.0.4'
+    rxAndroidVersion = '2.1.1'
+    rxKotlinVersion = '2.4.0'
+    hiltVersion = '2.36'
+    junitVersion = '4.13.2'
+    junitAndroidXVersion = '1.1.2'
+
+    Libs = [
+            // AndroidX
+            appcompat          : "androidx.appcompat:appcompat:$appcompatVersion",
+            constraintlayout   : "androidx.constraintlayout:constraintlayout:$constraintVersion",
+            activity           : "androidx.activity:activity-ktx:$activityVersion",
+
+            // RxJava
+            rxAndroid          : "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion",
+            rxKotlin           : "io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion",
+
+            // Hilt
+            hiltAndroid        : "com.google.dagger:hilt-android:$hiltVersion",
+            hiltCompiler       : "com.google.dagger:hilt-compiler:$hiltVersion",
+            hiltTesting        : "com.google.dagger:hilt-android-testing:$hiltVersion",
+
+            // ViewModel
+            viewmodelKtx       : "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion",
+            livedataKtx        : "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion",
+            viewmodelSavedState: "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycleVersion",
+            lifecycleCommon    : "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion",
+
+            // Testing
+            junit              : "junit:junit:$junitVersion",
+            androidxJunit      : "androidx.test.ext:junit:$junitAndroidXVersion",
+    ]
+}
