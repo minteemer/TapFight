@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="minteemer.tapfight.presentation.game.GameActivity">
+    tools:context="minteemer.tapfight.presentation.bubbles.BubblesGameActivity">
 
     <TextView
         android:id="@+id/p1_score"
@@ -31,7 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <minteemer.tapfight.ui.view.hud.TimerBarView
+    <minteemer.tapfight.view.hud.TimerBarView
         android:id="@+id/timer_bar_view"
         android:layout_width="0dp"
         android:layout_height="16dp"
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:timeLeft="50%" />
 
-    <minteemer.tapfight.ui.view.hud.ScoreRatioView
+    <minteemer.tapfight.view.hud.ScoreRatioView
         android:id="@+id/score_ratio_view"
         android:layout_width="0dp"
         android:layout_height="8dp"
@@ -52,7 +52,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:scoreRatio="50%" />
 
-    <minteemer.tapfight.ui.view.bubbles.BubblesSpawnerView
+    <minteemer.tapfight.view.bubbles.BubblesSpawnerView
         android:id="@+id/tap_area_player1"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -64,7 +64,7 @@
         app:layout_constraintTop_toBottomOf="@id/timer_bar_view"
         tools:visibility="gone" />
 
-    <minteemer.tapfight.ui.view.bubbles.BubblesSpawnerView
+    <minteemer.tapfight.view.bubbles.BubblesSpawnerView
         android:id="@+id/tap_area_player2"
         android:layout_width="0dp"
         android:layout_height="0dp"

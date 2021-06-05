@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TapFight.iml" filepath="$PROJECT_DIR$/TapFight.iml" group="TapFight" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="TapFight/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/StudioProjects.TapFight.iml" filepath="$PROJECT_DIR$/.idea/modules/StudioProjects.TapFight.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/TapFight.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/TapFight.app.iml" />
     </modules>
   </component>
 </project>

@@ -1,8 +1,8 @@
-package minteemer.tapfight.util
+package minteemer.tapfight.util.extensions
 
 import androidx.lifecycle.MutableLiveData
 
-fun <T> MutableLiveData<T>.updateValue(value: T) {
+fun <T> MutableLiveData<T>.setValueIfChanged(value: T) {
     if (value != this.value) {
         this.value = value
     }

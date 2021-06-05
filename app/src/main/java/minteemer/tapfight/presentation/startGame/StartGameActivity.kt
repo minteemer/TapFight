@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_start_game.*
 import minteemer.tapfight.R
-import minteemer.tapfight.presentation.game.GameActivity
+import minteemer.tapfight.presentation.bubbles.BubblesGameActivity
 
 class StartGameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,7 +14,7 @@ class StartGameActivity : AppCompatActivity() {
         setContentView(R.layout.activity_start_game)
 
         start_game_button.setOnClickListener {
-            startActivity(GameActivity.createIntent(this))
+            startActivity(BubblesGameActivity.createIntent(this))
         }
     }
 

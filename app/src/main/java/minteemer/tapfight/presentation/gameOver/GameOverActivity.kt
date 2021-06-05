@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_game_over.*
 import minteemer.tapfight.R
-import minteemer.tapfight.util.fastLazy
+import minteemer.tapfight.util.extensions.fastLazy
 
 class GameOverActivity : AppCompatActivity() {
 
