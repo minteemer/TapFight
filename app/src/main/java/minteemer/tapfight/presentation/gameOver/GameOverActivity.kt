@@ -4,23 +4,25 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_game_over.*
 import minteemer.tapfight.R
+import minteemer.tapfight.databinding.ActivityGameOverBinding
 import minteemer.tapfight.util.extensions.fastLazy
+import minteemer.tapfight.util.extensions.viewbinding.viewBinding
 
 class GameOverActivity : AppCompatActivity() {
+
+    private val binding: ActivityGameOverBinding by viewBinding(ActivityGameOverBinding::inflate)
 
     private val p1Score by fastLazy { intent.getIntExtra(EXTRA_P1_SCORE, 0) }
     private val p2Score by fastLazy { intent.getIntExtra(EXTRA_P2_SCORE, 0) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_game_over) // TODO add restart button
 
-        p1_score.text = p1Score.toString()
-        p2_score.text = p2Score.toString()
+        binding.p1Score.text = p1Score.toString()
+        binding.p2Score.text = p2Score.toString()
 
-        winnerText.setText(
+        binding.winnerText.setText(
             when {
                 p1Score > p2Score -> R.string.game_over_p1_wins
                 p1Score < p2Score -> R.string.game_over_p2_wins

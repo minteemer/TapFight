@@ -8,38 +8,38 @@ import android.os.Bundle
 import android.view.animation.LinearInterpolator
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_game.*
 import minteemer.tapfight.presentation.gameOver.GameOverActivity
-import minteemer.tapfight.R
+import minteemer.tapfight.databinding.ActivityGameBinding
 import minteemer.tapfight.domain.entity.*
+import minteemer.tapfight.util.extensions.viewbinding.viewBinding
 
 @AndroidEntryPoint
 class BubblesGameActivity : AppCompatActivity() {
 
+    private val binding: ActivityGameBinding by viewBinding(ActivityGameBinding::inflate)
     private val viewModel: BubblesGameViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_game)
 
         mapOf(
-            tap_area_player1 to Player.P1,
-            tap_area_player2 to Player.P2
+            binding.tapAreaPlayer1 to Player.P1,
+            binding.tapAreaPlayer2 to Player.P2
         ).forEach { (tapArea, player) ->
             tapArea.setOnBubbleTapListener { viewModel.onBubbleTap(player) }
             tapArea.setOnBubbleTimeoutListener { viewModel.onBubbleTimeout(player) }
         }
 
         viewModel.scores.observe(this) { scores ->
-            p1_score.text = scores.player1.toString()
-            p2_score.text = scores.player2.toString()
+            binding.p1Score.text = scores.player1.toString()
+            binding.p2Score.text = scores.player2.toString()
             updateScore(scores)
         }
 
         viewModel.bubbleSpawnEvents.observe(this) { player ->
             when (player) {
-                Player.P1 -> tap_area_player1.spawnBubble()
-                Player.P2 -> tap_area_player2.spawnBubble()
+                Player.P1 -> binding.tapAreaPlayer1.spawnBubble()
+                Player.P2 -> binding.tapAreaPlayer2.spawnBubble()
                 else -> Unit
             }
         }
@@ -57,12 +57,12 @@ class BubblesGameActivity : AppCompatActivity() {
     private fun updateScore(scores: Scores) {
         val p1Score = scores.player1.coerceAtLeast(1)
         val p2Score = scores.player2.coerceAtLeast(1)
-        score_ratio_view.scoreRatio = p1Score / (p1Score + p2Score).toFloat()
+        binding.scoreRatioView.scoreRatio = p1Score / (p1Score + p2Score).toFloat()
     }
 
     private fun startTimerAnimation(gameDuration: Long) {
         ObjectAnimator.ofFloat(
-            timer_bar_view,
+            binding.timerBarView,
             "timeLeft",
             1f,
             0f

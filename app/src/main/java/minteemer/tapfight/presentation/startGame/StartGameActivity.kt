@@ -4,16 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_start_game.*
-import minteemer.tapfight.R
+import minteemer.tapfight.databinding.ActivityStartGameBinding
 import minteemer.tapfight.presentation.bubbles.BubblesGameActivity
+import minteemer.tapfight.util.extensions.viewbinding.viewBinding
 
 class StartGameActivity : AppCompatActivity() {
+
+    private val binding: ActivityStartGameBinding by viewBinding(ActivityStartGameBinding::inflate)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_start_game)
 
-        start_game_button.setOnClickListener {
+        binding.startGameButton.setOnClickListener {
             startActivity(BubblesGameActivity.createIntent(this))
         }
     }
