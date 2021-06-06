@@ -3,7 +3,7 @@
     package="minteemer.tapfight">
 
     <application
-        android:name="minteemer.tapfight.TapFightApplication"
+        android:name="minteemer.tapfight.TapFightApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

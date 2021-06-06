@@ -2,6 +2,7 @@ package minteemer.tapfight.presentation.bubbles
 
 import android.util.Log
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.BackpressureStrategy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -13,9 +14,11 @@ import minteemer.tapfight.domain.entity.MutableScores
 import minteemer.tapfight.domain.entity.Player
 import minteemer.tapfight.domain.entity.Scores
 import minteemer.tapfight.domain.model.BubblesGameModeModel
+import javax.inject.Inject
 
-class BubblesGameViewModel(
-    private val gameModel: BubblesGameModeModel = BubblesGameModeModel()
+@HiltViewModel
+class BubblesGameViewModel @Inject constructor(
+    private val gameModel: BubblesGameModeModel
 ) : ViewModel(), LifecycleObserver {
 
     val gameState: MutableLiveData<GameState> = MutableLiveData()

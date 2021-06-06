@@ -7,12 +7,12 @@ import minteemer.tapfight.domain.entity.GameEvent
 import minteemer.tapfight.domain.entity.MutableScores
 import minteemer.tapfight.domain.entity.Player
 import minteemer.tapfight.repository.config.GameConfigRepository
-import minteemer.tapfight.repository.config.GameConfigRepositoryImpl
 import minteemer.tapfight.util.extensions.completeAfter
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class BubblesGameModeModel(
-    private val gameConfig: GameConfigRepository = GameConfigRepositoryImpl()
+class BubblesGameModeModel @Inject constructor(
+    private val gameConfig: GameConfigRepository
 ) {
     private val taps: PublishSubject<Player> = PublishSubject.create()
     private val bubbleTimeouts: PublishSubject<Player> = PublishSubject.create()

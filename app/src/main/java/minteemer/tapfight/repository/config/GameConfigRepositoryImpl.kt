@@ -1,9 +1,10 @@
 package minteemer.tapfight.repository.config
 
 import minteemer.tapfight.data.preferences.GamePreferences
+import javax.inject.Inject
 
-internal class GameConfigRepositoryImpl(
-    private val gamePreferences: GamePreferences = GamePreferences.INSTANCE
+internal class GameConfigRepositoryImpl @Inject constructor(
+    private val gamePreferences: GamePreferences
 ) : GameConfigRepository {
 
     override val speedTappingGameModeDurationSec: Long

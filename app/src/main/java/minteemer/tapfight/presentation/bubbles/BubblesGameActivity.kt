@@ -7,11 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.animation.LinearInterpolator
 import androidx.activity.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_game.*
 import minteemer.tapfight.presentation.gameOver.GameOverActivity
 import minteemer.tapfight.R
 import minteemer.tapfight.domain.entity.*
 
+@AndroidEntryPoint
 class BubblesGameActivity : AppCompatActivity() {
 
     private val viewModel: BubblesGameViewModel by viewModels()
