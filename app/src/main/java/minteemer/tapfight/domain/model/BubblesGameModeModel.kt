@@ -1,60 +1,63 @@
 package minteemer.tapfight.domain.model
 
-import io.reactivex.Observable
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.scan
+import kotlinx.coroutines.withTimeoutOrNull
 import minteemer.tapfight.domain.entity.GameEvent
 import minteemer.tapfight.domain.entity.MutableScores
 import minteemer.tapfight.domain.entity.Player
 import minteemer.tapfight.repository.config.GameConfigRepository
-import minteemer.tapfight.util.extensions.completeAfter
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class BubblesGameModeModel @Inject constructor(
     private val gameConfig: GameConfigRepository
 ) {
-    private val taps: PublishSubject<Player> = PublishSubject.create()
-    private val bubbleTimeouts: PublishSubject<Player> = PublishSubject.create()
+    private val taps: MutableSharedFlow<Player> = MutableSharedFlow()
+    private val bubbleTimeouts: MutableSharedFlow<Player> = MutableSharedFlow()
 
     /**
      * Registers tap of bubble by [player]
      */
-    fun bubbleTap(player: Player) {
-        taps.onNext(player)
+    suspend fun bubbleTap(player: Player) {
+        taps.emit(player)
     }
 
     /**
      * Registers timeout of bubble of [player]
      */
-    fun bubbleTimeout(player: Player) {
-        bubbleTimeouts.onNext(player)
+    suspend fun bubbleTimeout(player: Player) {
+        bubbleTimeouts.emit(player)
     }
 
     /**
-     * Starts new game and emits game events. Completes once game is over.
-     * @see GameEvent
+     * Starts new game and emits [GameEvent]s. Completes once the game is over.
      */
-    fun runGame(): Observable<GameEvent> =
-        Observable.concat(
-            Observable.just<GameEvent>(GameEvent.Started(gameConfig.bubblesGameModeDurationSec)),
-            startGame(),
-            Observable.just(GameEvent.GameOver)
-        )
+    fun runGame(): Flow<GameEvent> = flow {
+        emit(GameEvent.Started(gameConfig.bubblesGameModeDurationSec))
 
-    private fun startGame(): Observable<GameEvent> {
-        val timedTapSource = taps.hide().completeAfter(gameConfig.bubblesGameModeDurationSec, TimeUnit.SECONDS)
-        val timedBubbleTimeoutsSource = bubbleTimeouts.hide().completeAfter(gameConfig.bubblesGameModeDurationSec, TimeUnit.SECONDS)
+        withTimeoutOrNull(gameConfig.bubblesGameModeDurationSec * 1000) {
+            emitAll(startGame())
+        }
 
-        return Observable.merge(
-            scoreTracking(timedTapSource).subscribeOn(Schedulers.computation()),
-            bubbleRespawn(timedTapSource).subscribeOn(Schedulers.computation()),
-            bubbleRespawn(timedBubbleTimeoutsSource).subscribeOn(Schedulers.computation()),
-            initialBubbleSpawn(gameConfig.initialBubbleSpawnDelayMills).subscribeOn(Schedulers.computation())
-        )
+        emit(GameEvent.GameOver)
     }
 
-    private fun scoreTracking(tapSource: Observable<Player>): Observable<GameEvent.ScoreUpdated> =
+    private fun startGame() = merge(
+        scoreTracking(taps),
+        taps.map { player -> GameEvent.SpawnBubble(player) },
+        bubbleTimeouts.map { player -> GameEvent.SpawnBubble(player) },
+        initialBubbleSpawn(gameConfig.initialBubbleSpawnDelayMills, gameConfig.bubbles),
+    )
+
+    private fun scoreTracking(tapSource: Flow<Player>): Flow<GameEvent.ScoreUpdated> =
         tapSource
             .scan(MutableScores()) { scores, player ->
                 scores[player] += 1
@@ -62,15 +65,13 @@ class BubblesGameModeModel @Inject constructor(
             }
             .map { scores -> GameEvent.ScoreUpdated(scores) }
 
-    private fun bubbleRespawn(tapSource: Observable<Player>): Observable<GameEvent.SpawnBubble> =
-        tapSource.map { player -> GameEvent.SpawnBubble(player) }
-
-    private fun initialBubbleSpawn(intervalMills: Long): Observable<GameEvent.SpawnBubble> =
-        Observable.interval(intervalMills, TimeUnit.MILLISECONDS)
-            .take(gameConfig.bubbles.toLong())
-            .flatMap {
-                Observable.fromIterable(Player.values().map { GameEvent.SpawnBubble(it) })
+    private fun initialBubbleSpawn(intervalMills: Long, bubbles: Int): Flow<GameEvent.SpawnBubble> =
+        flow {
+            repeat(bubbles) {
+                delay(intervalMills)
+                Player.values().forEach { player ->
+                    emit(GameEvent.SpawnBubble(player))
+                }
             }
+        }
 }
-
-
