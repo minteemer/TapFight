@@ -65,6 +65,7 @@ class BubblesSpawnerView @JvmOverloads constructor(
         // TODO BubbleView recycling?
         val bubbleView = BubbleView(
             context = context,
+            timeoutMills = bubbleTimeoutMills,
             onTap = onBubbleTap,
             onTimeout = onBubbleTimeout,
             onTerminalStateReached = ::onBubbleTerminalStateReached
