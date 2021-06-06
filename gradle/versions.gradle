@@ -1,13 +1,14 @@
 ext {
-    androidPluginVersion = '4.2.1'
-    kotlinVersion = '1.5.10'
-    lifecycleVersion = '2.3.1'
     activityVersion = '1.2.3'
+    androidPluginVersion = '4.2.1'
     appcompatVersion = '1.3.0'
     constraintVersion = '2.0.4'
     hiltVersion = '2.36'
     junitVersion = '4.13.2'
     junitAndroidXVersion = '1.1.2'
+    kotlinVersion = '1.5.10'
+    lifecycleVersion = '2.3.1'
+    timberVersion = '4.7.1'
 
     Libs = [
             // AndroidX
@@ -25,6 +26,8 @@ ext {
             livedataKtx        : "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion",
             viewmodelSavedState: "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycleVersion",
             lifecycleCommon    : "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion",
+
+            timber             : "com.jakewharton.timber:timber:$timberVersion",
 
             // Testing
             junit              : "junit:junit:$junitVersion",

@@ -56,6 +56,8 @@ dependencies {
     implementation Libs.viewmodelSavedState
     kapt Libs.lifecycleCommon
 
+    implementation Libs.timber
+
     // Testing
     testImplementation Libs.junit
     androidTestImplementation Libs.androidxJunit

@@ -1,7 +1,11 @@
 package minteemer.tapfight.presentation.bubbles
 
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -15,6 +19,7 @@ import minteemer.tapfight.domain.entity.MutableScores
 import minteemer.tapfight.domain.entity.Player
 import minteemer.tapfight.domain.entity.Scores
 import minteemer.tapfight.domain.model.BubblesGameModeModel
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,8 +45,8 @@ class BubblesGameViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.Main) {
             gameModel.runGame()
                 .conflate()
-                .onEach { event -> Log.d("GameEvent", event.toString()) }
-                .catch { error -> Log.e("GameActivity", error.message, error) }
+                .onEach { event -> Timber.i(event.toString()) }
+                .catch { error -> Timber.e(error) }
                 .flowOn(Dispatchers.Default)
                 .collect(::handleGameEvent)
         }

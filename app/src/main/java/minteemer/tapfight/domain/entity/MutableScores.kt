@@ -9,4 +9,6 @@ class MutableScores : Scores {
     operator fun set(player: Player, score: Int) {
         scores[player.ordinal] = score
     }
+
+    override fun toString(): String = Player.values().joinToString(prefix = "[", postfix = "]") { player -> "$player: ${get(player)}" }
 }
