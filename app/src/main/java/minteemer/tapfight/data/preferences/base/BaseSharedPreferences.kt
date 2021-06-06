@@ -3,7 +3,7 @@ package minteemer.tapfight.data.preferences.base
 import android.content.Context
 import android.content.SharedPreferences
 
-// TODO migrate to new preferences lib
+// TODO migrate to DataStore?
 open class BaseSharedPreferences(
     context: Context,
     preferencesName: String,
